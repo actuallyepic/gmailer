@@ -1,5 +1,5 @@
 {
-  "name": "gmailer",
+  "name": "@dubdubdublabs/gmailer",
   "version": "1.0.0",
   "description": "Parse messages from the Gmail API into a usable, MIME-decoded JSON format ",
   "main": "lib/index.js",

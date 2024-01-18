@@ -1,0 +1,48 @@
+{
+  "name": "gmailer",
+  "version": "1.0.0",
+  "description": "Parse messages from the Gmail API into a usable, MIME-decoded JSON format ",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/actuallyepic/gmailer.git"
+  },
+  "keywords": [
+    "gmail",
+    "parse",
+    "nodemailer"
+  ],
+  "author": "Anupam Batra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/actuallyepic/gmailer/issues"
+  },
+  "homepage": "https://github.com/actuallyepic/gmailer#readme",
+  "dependencies": {
+    "@types/dompurify": "^3.0.5",
+    "@types/he": "^1.2.3",
+    "@types/html-to-text": "^9.0.4",
+    "@types/jsdom": "^21.1.6",
+    "@types/libmime": "^5.0.3",
+    "@types/linkify-it": "^3.0.5",
+    "@types/nodemailer": "^6.4.14",
+    "@types/quoted-printable": "^1.0.2",
+    "dompurify": "^3.0.8",
+    "googleapis": "^131.0.0",
+    "he": "^1.2.0",
+    "html-to-text": "^9.0.5",
+    "iconv-lite": "^0.6.3",
+    "jsdom": "^23.2.0",
+    "libmime": "^5.2.1",
+    "linkify-it": "^5.0.0",
+    "nodemailer": "^6.9.8",
+    "punycode": "^2.3.1",
+    "quoted-printable": "^1.0.1",
+    "typescript": "^5.3.3"
+  }
+}

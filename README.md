@@ -29,7 +29,13 @@ import { buildEmail, Email } from "@dubdubdublabs/gmailer"
 
 async function retrieveDecodedEmail(){
 
-    //initialize Gmail object
+    /* initialize Gmail object
+      oauth2Client.setCredentials({
+        access_token: YOUR_ACCESS_TOKEN,
+      });
+    
+      gmail = google.gmail({ version: "v1", auth: oauth2Client });
+    */
 
     const res: GaxiosResponse<Thread> = await gmail.users.threads.get({
         userId: "me",

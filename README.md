@@ -23,3 +23,26 @@ It's synchronous, typed, and extracts both plaintext and html (cleaned by DOMPur
 ```
 
  Use by calling the ```buildEmail``` function with a Gmail message object. 
+
+```
+import { buildEmail, Email } from "@dubdubdublabs/gmailer"
+
+async function retrieveDecodedEmail(){
+
+    //initialize Gmail object
+
+    const res: GaxiosResponse<Thread> = await gmail.users.threads.get({
+        userId: "me",
+        id: threadId,
+        format: "full",
+    });
+
+    let parsedThread: Email[] = []
+
+    for (let messageItem of res.data.messages) {
+        parsedThread.push(buildEmail(messageItem);
+    }
+
+    return parsedThread
+}
+```

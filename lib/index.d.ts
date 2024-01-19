@@ -1,18 +1,6 @@
 import { gmail_v1 } from "googleapis";
 import { Address, Attachment as NodemailerAttachment } from "nodemailer/lib/mailer";
-export declare function buildEmail(message: gmail_v1.Schema$Message): Promise<{
-    attachments?: Attachment[] | undefined;
-    body: EmailBody;
-    threadId: string;
-    messageId: string;
-    replyTo?: Address[] | undefined;
-    subject: string;
-    date: Date;
-    from: Address[];
-    to: Address[];
-    cc: Address[];
-    bcc: Address[];
-}>;
+export declare function buildEmail(message: gmail_v1.Schema$Message): Email;
 export type EmailBody = {
     plainText?: string;
     plainTextAsHtml?: string;

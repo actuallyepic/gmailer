@@ -12,7 +12,7 @@ import { htmlToText } from "html-to-text";
 import iconv from "iconv-lite";
 
 
-export async function buildEmail(message: gmail_v1.Schema$Message){
+export function buildEmail(message: gmail_v1.Schema$Message): Email{
   const headers = message?.payload?.headers;
   const messageId = message?.id;
   const threadId = message?.threadId;
@@ -61,7 +61,7 @@ export async function buildEmail(message: gmail_v1.Schema$Message){
   let body: EmailBody = {
     plainText: parentNode.getText(),
     plainTextAsHtml: parentNode.getTextAsHtml(),
-    html: await parentNode.getHtml(),
+    html: parentNode.getHtml(),
   };
 
   return {
@@ -609,7 +609,7 @@ class Node {
     return this.textAsHtml.join("");
   }
 
-  async getHtml(): Promise<string> {
+  getHtml() {
     let cleanHtml = Node.cleanHtml(this.html.join(""));
     return cleanHtml;
   }

@@ -130,3 +130,5 @@ dist
 .pnp.*
 
 bun.lockb
+
+lib/

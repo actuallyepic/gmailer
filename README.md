@@ -26,19 +26,28 @@ It's synchronous, typed, and extracts both plaintext and html (cleaned by DOMPur
 
 ```
 import { buildEmail, Email } from "@dubdubdublabs/gmailer"
+import { google, gmail_v1 } from "googleapis" 
 
-async function retrieveDecodedEmail(){
+async function retrieveDecodedEmail(threadId){
 
-    //initialize Gmail object
+    //initialize gmail library
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({
+        access_token: YOUR_ACCESS_TOKEN,
+    });
+    gmail = google.gmail({ version: "v1", auth: oauth2Client });
 
+    //get the full message list for a given thread id 
     const res: GaxiosResponse<Thread> = await gmail.users.threads.get({
         userId: "me",
         id: threadId,
         format: "full",
     });
 
+    //declare a return array 
     let parsedThread: Email[] = []
 
+    //iterate over each message in the thread and run the parsing function 
     for (let messageItem of res.data.messages) {
         parsedThread.push(buildEmail(messageItem);
     }

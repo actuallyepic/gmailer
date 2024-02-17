@@ -556,15 +556,14 @@ class Node {
   traverseTree() {
     if (Node.textTypes.includes(this.mimeType)) {
       if (this.mimeType === MimeType.PLAIN) {
-        if (!this.body?.data) {
-          console.log(this.body)
-          throw new Error("No body data");
+        if (!this.body || this.body.data === undefined || this.body.data === null) {
+          throw new Error("No body data - " + JSON.stringify(this.body));
         }
         this.text.push(this.body.data);
         this.textAsHtml.push(Node.textToHtml(this.body.data));
       } else if (this.mimeType === MimeType.HTML) {
-        if (!this.body?.data) {
-          throw new Error("No body data");
+        if (!this.body || this.body.data === undefined || this.body.data === null) {
+          throw new Error("No body data - " + JSON.stringify(this.body));
         }
         this.html.push(this.body.data);
         try {

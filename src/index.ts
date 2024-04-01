@@ -133,8 +133,7 @@ function processHeaders(lines: gmail_v1.Schema$MessagePartHeader[]) {
     }
     let key = line.name?.toLowerCase();
     let value: any = line.value;
-    // let value: any = ((libmime.decodeHeader(line.value ?? '') || {}).value || '').toString().trim();
-    // console.log(value)
+
     value = Buffer.from(value, "binary").toString();
     switch (key) {
       case "content-type":
@@ -155,7 +154,6 @@ function processHeaders(lines: gmail_v1.Schema$MessagePartHeader[]) {
       case "date": {
         let dateValue = new Date(value);
         if (isNaN(Date.parse(value))) {
-          // date parsing failed :S
           dateValue = new Date();
         }
         value = dateValue;
@@ -515,8 +513,6 @@ class Node {
               throw new Error("No attachment id for attachment");
             }
             this.body.data = this.encoding;
-            // let buffer = this.body.attachmentId ? Buffer.from(this.body.attachmentId, Encoding.BASE64) : Buffer.alloc(0);
-            // this.body.data = iconv.decode(buffer, this.charset);
             break;
           }
         }
@@ -524,7 +520,6 @@ class Node {
           if (Node.textTypes.includes(this.mimeType)) {
             if (Disposition.INLINE === this.disposition) {
               if (!this.body?.data) {
-                console.log(this)
                 this.body = { size: 0, data: "" };
               }
               let buffer = this.body.data ? Buffer.from(Node.decodeQuotedPrintable(this.body.data), "base64") : Buffer.alloc(0);
@@ -541,7 +536,23 @@ class Node {
           }
         }
         default: {
-          throw new Error("No encoding provided");
+          if (Node.textTypes.includes(this.mimeType)) {
+            if (Disposition.INLINE === this.disposition) {
+              if (!this.body?.data) {
+                this.body = { size: 0, data: "" };
+              }
+              let buffer = this.body.data ? Buffer.from(Node.decodeQuotedPrintable(this.body.data), "binary") : Buffer.alloc(0);
+              this.body.data = iconv.decode(buffer, this.charset);
+              break;
+            }
+            throw new Error("No Disposition");
+          } else if (Disposition.ATTATCHMENT === this.disposition) {
+            if (!this.body?.attachmentId) {
+              throw new Error("No attachment id for attachment");
+            }
+            this.body.data = this.encoding;
+            break;
+          }
         }
       }
     }

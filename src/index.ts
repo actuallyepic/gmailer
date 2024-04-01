@@ -541,7 +541,7 @@ class Node {
               if (!this.body?.data) {
                 this.body = { size: 0, data: "" };
               }
-              let buffer = this.body.data ? Buffer.from(Node.decodeQuotedPrintable(this.body.data), "binary") : Buffer.alloc(0);
+              let buffer = this.body.data ? Buffer.from(this.body.data, "binary") : Buffer.alloc(0);
               this.body.data = iconv.decode(buffer, this.charset);
               break;
             }

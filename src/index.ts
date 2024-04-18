@@ -432,9 +432,14 @@ class Node {
       return obj;
     }, {});
 
+    let normalizedHeaders = Object.keys(headers).reduce((acc: { [key: string]: string }, key) => {
+      acc[key.toLowerCase()] = headers[key];
+      return acc;
+    }, {});
+
     if (!part.mimeType?.includes("multipart")) {
-      if (headers["Content-Disposition"]) {
-        let parsedDisposition = libmime.parseHeaderValue(headers["Content-Disposition"]);
+      if (normalizedHeaders["content-disposition"]) {
+        let parsedDisposition = libmime.parseHeaderValue(normalizedHeaders["content-disposition"]);
         if (parsedDisposition?.value && (parsedDisposition.value == Disposition.ATTATCHMENT || parsedDisposition.value == Disposition.INLINE)) {
           disposition = parsedDisposition.value as Disposition;
         } else {
@@ -448,15 +453,16 @@ class Node {
         }
       }
 
-      if (headers["Content-ID"]) {
-        this.cid = headers["Content-ID"].replace(/^<|>$/g, "");
+      if (normalizedHeaders["content-id"]) {
+        this.cid = normalizedHeaders["content-id"].replace(/^<|>$/g, "");
       }
 
-      encoding = Node.encodingTypes.includes(headers["Content-Transfer-Encoding"])
-        ? (headers["Content-Transfer-Encoding"] as Encoding)
+      encoding = Node.encodingTypes.includes(normalizedHeaders["content-transfer-encoding"])
+        ? (normalizedHeaders["content-transfer-encoding"] as Encoding)
         : Encoding.BASE64;
 
-      let contentType = headers["Content-Type"];
+      let contentType = normalizedHeaders["content-type"];
+
       let matchingCharset = Object.values(Charset).find((charset) => contentType.toLowerCase().includes(charset));
 
       if (matchingCharset) {

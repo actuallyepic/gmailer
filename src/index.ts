@@ -12,7 +12,7 @@ import { htmlToText } from "html-to-text";
 import iconv from "iconv-lite";
 
 
-export function buildEmail(message: gmail_v1.Schema$Message): Email{
+export function buildEmail(message: gmail_v1.Schema$Message): Email {
   const headers = message?.payload?.headers;
   const messageId = message?.id;
   const threadId = message?.threadId;
@@ -515,10 +515,9 @@ class Node {
           }
           //if its an attatchment
           else if (Disposition.ATTATCHMENT === this.disposition) {
-            if (!this.body?.attachmentId) {
-              throw new Error("No attachment id for attachment");
+            if (this.body?.attachmentId) {
+              this.body.data = this.encoding;
             }
-            this.body.data = this.encoding;
             break;
           }
         }
@@ -534,10 +533,9 @@ class Node {
             }
             throw new Error("No Disposition");
           } else if (Disposition.ATTATCHMENT === this.disposition) {
-            if (!this.body?.attachmentId) {
-              throw new Error("No attachment id for attachment");
+            if (this.body?.attachmentId) {
+              this.body.data = this.encoding;
             }
-            this.body.data = this.encoding;
             break;
           }
         }
@@ -553,10 +551,10 @@ class Node {
             }
             throw new Error("No Disposition");
           } else if (Disposition.ATTATCHMENT === this.disposition) {
-            if (!this.body?.attachmentId) {
-              throw new Error("No attachment id for attachment");
+            if (this.body?.attachmentId) {
+              this.body.data = this.encoding;
             }
-            this.body.data = this.encoding;
+
             break;
           }
         }
